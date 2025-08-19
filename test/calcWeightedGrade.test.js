@@ -1,4 +1,4 @@
-const { calcularNotaPonderada, percentil } = require('../src/utils/caclWeightedGrade');
+const { calcularNotaPonderada, percentil } = require('../src/utils/calcWeightedGrade');
 
 describe('calcularNotaPonderada', () => {
   it('calcula correctamente la nota ponderada', () => {
