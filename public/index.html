@@ -1,36 +1,121 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Perfil - Clima & Conversión</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        background-color: #f2f2f2;
-        color: #333;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-      }
-      header,
-      footer {
-        background: #004080;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        width: 100%;
-      }
-      main {
-        max-width: 600px;
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <header><h1>Perfil</h1></header>
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil — Notas & Estadística</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fb;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #2a9d8f;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-bottom: 3px solid #1f776b;
+    }
+    section {
+      background: white;
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 700px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2a9d8f;
+      margin-top: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #e9f5f3;
+    }
+    tfoot td {
+      font-weight: bold;
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Perfil — Notas & Estadística</h1>
+  </header>
 
-    <h2>Bienvenido, Usuario</h2>
-  </body>
+    <section>
+    <h2>Información Personal</h2>
+    <p><strong>Nombre completo:</strong>Micaela Salcedo</p>
+    <p><strong>NRC:</strong> 22431</p>
+    <p><strong>Correo institucional:</strong> mssalcedo2@espe.edu.ec</p>
+  </section>
+  <section>
+    <h2>Presentación</h2>
+    <p>
+      Soy estudiante de Ingeniería de Software en la ESPE.
+      Actualmente curso el 6to semestre de la carrera.
+      Me apasiona el desarrollo web y la inteligencia artificial.
+      Tambien me gusta mucho leer libros y ver series
+      No me gusta mucho el futbol y los deportes en general 
+      pero disfruto de actividades al aire libre como el senderismo.
+    </p>
+  </section>
+
+  <section>
+    <h2>Notas</h2>
+    <table id="tabla-notas">
+      <thead>
+        <tr>
+          <th>Asignatura</th>
+          <th>Calificación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Programación Avanzada</td><td>18</td></tr>
+        <tr><td>Bases de Datos</td><td>16</td></tr>
+        <tr><td>Redes</td><td>15</td></tr>
+        <tr><td>Desarrollo Web</td><td>19</td></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Promedio</td>
+          <td id="promedio"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </section>
+
+  <script>
+    function calcularPromedio() {
+      const filas = document.querySelectorAll('#tabla-notas tbody tr');
+      let suma = 0;
+      let contador = 0;
+
+      filas.forEach(fila => {
+        const nota = parseFloat(fila.cells[1].textContent);
+        if (!isNaN(nota)) {
+          suma += nota;
+          contador++;
+        }
+      });
+
+      const promedio = contador > 0 ? (suma / contador).toFixed(2) : 0;
+      document.getElementById('promedio').textContent = promedio;
+    }
+
+    calcularPromedio();
+  </script>
+</body>
 </html>
