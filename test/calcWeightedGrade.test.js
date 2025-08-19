@@ -1,48 +1,65 @@
+const { calcularNotaPonderada, percentil } = require('../src/utils/caclWeightedGrade');
 
-const {
-  toCelsius,
-  toFahrenheit,
-  movingAverage,
-} = require('../src/utils/sum');
-
-describe('Conversión de temperaturas', () => {
-  test('32°F -> 0.0°C', () => {
-    expect(toCelsius(32)).toBe(0.0);
+describe('calcularNotaPonderada', () => {
+  it('calcula correctamente la nota ponderada', () => {
+    const resultado = calcularNotaPonderada([
+      { score: 80, weight: 0.4 },
+      { score: 90, weight: 0.6 }
+    ]);
+    expect(resultado).toBe(86.00);
   });
 
-  test('0°C -> 32.0°F', () => {
-    expect(toFahrenheit(0)).toBe(32.0);
+  it('lanza error si los pesos no suman a 1', () => {
+    expect(() => calcularNotaPonderada([
+      { score: 80, weight: 0.5 },
+      { score: 90, weight: 0.3 }
+    ])).toThrow(RangeError);
   });
 
-  test('100°C -> 212.0°F', () => {
-    expect(toFahrenheit(100)).toBe(212.0);
+  it('lanza error si un score está fuera de rango', () => {
+    expect(() => calcularNotaPonderada([
+      { score: 120, weight: 0.5 },
+      { score: 80, weight: 0.5 }
+    ])).toThrow(RangeError);
   });
 
-  test('-40°C -> -40.0°F', () => {
-    expect(toFahrenheit(-40)).toBe(-40.0);
-    expect(toCelsius(-40)).toBe(-40.0);
+  it('lanza error si un weight está fuera de rango', () => {
+    expect(() => calcularNotaPonderada([
+      { score: 80, weight: -0.2 },
+      { score: 90, weight: 1.2 }
+    ])).toThrow(RangeError);
   });
 
-  test('error si no es número', () => {
-    expect(() => toCelsius('hola')).toThrow(TypeError);
-    expect(() => toFahrenheit(NaN)).toThrow(TypeError);
+  it('lanza error si items no es un arreglo válido', () => {
+    expect(() => calcularNotaPonderada(null)).toThrow(TypeError);
+    expect(() => calcularNotaPonderada([])).toThrow(TypeError);
   });
 });
 
-describe('Media móvil', () => {
-  test('[10,20,30,40] con w=2 -> [15.00,25.00,35.00]', () => {
-    expect(movingAverage([10, 20, 30, 40], 2)).toEqual([15.0, 25.0, 35.0]);
+describe('percentil', () => {
+  it('devuelve el mínimo cuando p=0', () => {
+    expect(percentil(0, [1, 2, 3])).toBe(1.00);
   });
 
-  test('[1,2,3] con w=3 -> [2.00]', () => {
-    expect(movingAverage([1, 2, 3], 3)).toEqual([2.0]);
+  it('devuelve el máximo cuando p=100', () => {
+    expect(percentil(100, [1, 2, 3])).toBe(3.00);
   });
 
-  test('error si valores no son números', () => {
-    expect(() => movingAverage([1, 'x', 3], 2)).toThrow(TypeError);
+  it('calcula correctamente el percentil con método nearest-rank', () => {
+    expect(percentil(50, [1, 2, 3, 4])).toBe(2.00);
   });
 
-  test('error si ventana fuera de rango', () => {
-    expect(() => movingAverage([1, 2], 5)).toThrow(RangeError);
+  it('lanza error si p está fuera de rango', () => {
+    expect(() => percentil(-10, [1, 2, 3])).toThrow(RangeError);
+    expect(() => percentil(120, [1, 2, 3])).toThrow(RangeError);
+  });
+
+  it('lanza error si valores no es un arreglo válido', () => {
+    expect(() => percentil(50, null)).toThrow(TypeError);
+    expect(() => percentil(50, [])).toThrow(TypeError);
+  });
+
+  it('lanza error si valores contiene elementos no numéricos', () => {
+    expect(() => percentil(50, [1, 'a', 3])).toThrow(TypeError);
   });
 });
