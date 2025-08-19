@@ -1,0 +1,24 @@
+crear el index y la carpeta de la funcion
+npm init -y
+npm install express
+--save-dev jest eslint 
+npm install express jest eslint --save-dev
+
+
+npm install -g firebase-tools
+firebase login
+firebase init hosting
+
+Y
+Use an existing project
+public
+✔ What do you want to use as your public directory? public
+? Configure as a single-page app (rewrite all urls to /index.html)? (Y/n)    n
+? File public/index.html already exists. Overwrite? (y/N)  n
+
+
+SalcedoMicaela/operativos
+
+? Set up the workflow to run a build script before every deploy? (Y/n)   n
+? Set up automatic deployment to your site's live channel when a PR is merged? (Y/n)  Y
+? What is the name of the GitHub branch associated with your site's live channel? (main)   enter

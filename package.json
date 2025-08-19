@@ -1,0 +1,20 @@
+{
+  "name": "poryectop3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js",
+    "lint": "npx eslint "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^9.33.0",
+    "express": "^5.1.0",
+    "jest": "^30.0.5"
+  }
+}
